@@ -1,0 +1,61 @@
+#include <string>
+#include <iostream>
+ 
+using namespace std;
+ 
+int stringToNum(char c)     // chuyen char sang so
+{
+    return c - '0';
+}
+ 
+char numToString(int n)     // chuyen so sang char
+{
+    return (char)(n+48);
+}
+ 
+void chuanHoa(string &a, string &b) // lam 2 xau co do dai bang nhau
+{
+    int l1 = a.length(), l2 = b.length();
+    if (l1 >= l2)
+    {
+        b.insert(0, l1-l2, '0');    // chen vao dau cua b cac ky tu '0'
+    }
+    else
+    {
+        a.insert(0, l2-l1, '0');    // chen vao dau cua a cac ky tu '0'
+    }
+}
+ 
+string sum(string stn1, string stn2)  // tong 2 so
+{
+    string s = "";
+    chuanHoa(stn1,stn2);      // chuan hoa
+    int l = stn1.length();
+     
+    int temp = 0;
+    for (int i=l-1; i>=0; i--)   // duyet va cong
+    {
+        temp = stringToNum(stn1[i]) + stringToNum(stn2[i]) + temp;    // tinh tong tung doi mot
+        s.insert(0,1,numToString(temp%10));         // gan phan don vi vao
+        temp = temp/10;     // lay lai phan hang chuc
+    }
+    if (temp>0)  // neu hang chuc > 0 thi them vao KQ
+    {
+        s.insert(0,1,numToString(temp));
+    } 
+    return s;
+}
+int main()
+{
+    string a, b, s;
+ 
+    getline(cin, a);
+    getline(cin, b);
+     
+    s = sum(a,b);
+    cout<<"Tong cua a va b : "<<s<<endl;
+     
+    
+     
+    return 0; 
+}
